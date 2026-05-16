@@ -1,14 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
-import Navbar from "./components/layout/Navbar";
+import Navbar from "./Components/layout/Navbar";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import About from "./pages/About";
 import Gallery from "./pages/Gallery";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
-import ProtectedRoute from "./components/common/ProtectedRoute";
+import ProtectedRoute from "./Components/common/ProtectedRoute";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
 
