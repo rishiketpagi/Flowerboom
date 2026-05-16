@@ -14,6 +14,7 @@ import "../styles/Cart.css";
  * - Order placement with Supabase integration
  * - Total price calculation
  */
+
 const Cart = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
