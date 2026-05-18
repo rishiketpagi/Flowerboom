@@ -17,6 +17,7 @@ import Orders from "./pages/Orders";
  * 
  * Sets up routing and wraps the app with AuthProvider for global auth state management
  */
+
 const App = () => {
   return (
     <BrowserRouter basename="/FlowerBoom">
