@@ -20,7 +20,7 @@ import Orders from "./pages/Orders";
 
 const App = () => {
   return (
-    <BrowserRouter basename="/FlowerBoom">
+    <BrowserRouter basename="/Flowerboom">
       <AuthProvider>
         <Navbar />
 
