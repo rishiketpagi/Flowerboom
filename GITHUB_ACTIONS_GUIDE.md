@@ -9,6 +9,8 @@
 6. [Advanced Features](#advanced-features)
 7. [Best Practices](#best-practices)
 8. [Troubleshooting](#troubleshooting)
+9. [FlowerBoom GitHub Pages Setup](#flowerboom-github-pages-setup)
+10. [Custom Domain Setup](#custom-domain-setup)
 
 ---
 
@@ -787,6 +789,125 @@ jobs:
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Or PAT
 ```
+
+---
+
+## FlowerBoom GitHub Pages Setup
+
+Use these steps for this project specifically.
+
+### Step 1: Make sure the workflow exists
+
+The deploy workflow is in [.github/workflows/deploy.yml](.github/workflows/deploy.yml). It does 4 things:
+1. Checks out the code
+2. Configures GitHub Pages
+3. Installs dependencies and builds the React app
+4. Uploads the `dist/` folder and deploys it
+
+### Step 2: Enable GitHub Pages in the repository settings
+
+1. Open the repository on GitHub.
+2. Go to **Settings**.
+3. Click **Pages**.
+4. Under **Build and deployment**, set **Source** to **GitHub Actions**.
+5. Save the setting.
+
+If this is not enabled, `actions/deploy-pages` fails with a 404.
+
+### Step 3: Confirm the app base path matches the repo name
+
+This project is configured for GitHub Pages under `/Flowerboom/`.
+
+The important files are:
+- [vite.config.js](vite.config.js)
+- [src/App.jsx](src/App.jsx)
+
+If your repository name changes, update both files to match the new Pages path exactly.
+
+### Step 4: Commit and push
+
+```bash
+git add .github/workflows/deploy.yml vite.config.js src/App.jsx
+git commit -m "Configure GitHub Pages deployment"
+git push origin main
+```
+
+### Step 5: Watch the workflow in GitHub
+
+1. Open the repository.
+2. Click **Actions**.
+3. Open the latest run of **Deploy to GitHub Pages**.
+4. Check the `build` job first.
+5. Check the `deploy` job after the build succeeds.
+
+### Step 6: Verify the site URL
+
+Once deployment succeeds, GitHub Pages will publish the site at the URL shown in the workflow environment.
+
+For this repo, the router basename and Vite base must match the deployed path, otherwise the site may load with missing assets or broken navigation.
+
+### Step 7: If deployment still fails
+
+Use this checklist:
+1. Verify Pages is enabled in **Settings > Pages**.
+2. Confirm the workflow file is on the `main` branch.
+3. Check that the `dist/` folder is created by `npm run build`.
+4. Make sure the repo path casing matches exactly.
+5. Re-run the workflow after changing settings.
+
+---
+
+## Custom Domain Setup
+
+Use this if you want the site on your own domain, such as `www.example.com`.
+
+### Step 1: Enable Pages first
+
+Before using a custom domain, the repo must already be publishing through GitHub Pages.
+
+### Step 2: Add the custom domain in GitHub
+
+1. Open the repository on GitHub.
+2. Go to **Settings**.
+3. Click **Pages**.
+4. In **Custom domain**, type your domain name.
+5. Save the setting.
+
+GitHub will create or expect a `CNAME` record for the site.
+
+### Step 3: Update your DNS provider
+
+For a root domain like `example.com`, point it to GitHub Pages using A records.
+
+For a subdomain like `www.example.com`, point it with a CNAME record.
+
+Common setup:
+1. Add A records for `@` to GitHub Pages IP addresses.
+2. Add a CNAME record for `www` pointing to your GitHub Pages domain.
+
+### Step 4: Change the app base path
+
+This project currently uses a GitHub Pages subpath:
+- [vite.config.js](vite.config.js) uses `/Flowerboom/`
+- [src/App.jsx](src/App.jsx) uses `/Flowerboom`
+
+If you switch to a custom domain, change both to `/` or remove the basename so the app loads from the domain root.
+
+### Step 5: Rebuild and redeploy
+
+After changing the domain settings and app path:
+1. Commit the code change.
+2. Push to `main`.
+3. Wait for the workflow to finish.
+4. Open the custom domain in the browser.
+
+### Step 6: If the domain does not load
+
+Check these first:
+1. DNS changes can take time to propagate.
+2. The domain in GitHub Pages settings must match the DNS record.
+3. The app must not still point to `/Flowerboom/`.
+4. HTTPS can take a few minutes to become available.
 
 ---
 

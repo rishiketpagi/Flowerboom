@@ -30,7 +30,7 @@ const MOCK_FLOWERS = [
         description: "Vibrant tulips perfect for celebrations.",
         price: 649,
         category: "Seasonal",
-        image: "https://images.pexels.com/photos/15239/flower-tulip-garden-purple.jpg?auto=compress&cs=tinysrgb&w=1200",
+        image: "https://images.pexels.com/photos/23070793/pexels-photo-23070793.jpeg?auto=compress&cs=tinysrgb&w=1200",
     },
     {
         id: "flr_orchid_pink",

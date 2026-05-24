@@ -11,6 +11,7 @@ import Contact from "./pages/Contact";
 import ProtectedRoute from "./Components/common/ProtectedRoute";
 import Cart from "./pages/Cart";
 import Orders from "./pages/Orders";
+import Profile from "./pages/Profile";
 
 /**
  * Main App Component
@@ -19,8 +20,11 @@ import Orders from "./pages/Orders";
  */
 
 const App = () => {
+  // Use /Flowerboom for production (GitHub Pages), / for development
+  const basename = import.meta.env.MODE === 'production' ? '/Flowerboom' : '/';
+
   return (
-    <BrowserRouter basename="/Flowerboom">
+    <BrowserRouter basename={basename}>
       <AuthProvider>
         <Navbar />
 
@@ -48,6 +52,14 @@ const App = () => {
             element={
               <ProtectedRoute>
                 <Orders />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
               </ProtectedRoute>
             }
           />

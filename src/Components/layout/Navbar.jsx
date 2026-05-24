@@ -62,8 +62,6 @@ const Navbar = () => {
         setOpen(false);
     };
 
-    const userDisplayName = user?.name || user?.email?.split("@")[0] || "User";
-
     return (
         <nav className="navbar">
             <div className="navbar-inner">
@@ -73,9 +71,13 @@ const Navbar = () => {
                 </Link>
 
                 <div className="nav-center">
-                    <NavLink to="/home" className="nav-link">Home</NavLink>
-                    <NavLink to="/gallery" className="nav-link">Gallery</NavLink>
-                    <NavLink to="/about" className="nav-link">About</NavLink>
+                    <NavLink to="/home" end className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Home</NavLink>
+                    <NavLink to="/gallery" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Gallery</NavLink>
+
+                    <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link cart-link active" : "nav-link cart-link"}>
+                        Cart
+                        {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
+                    </NavLink>
                 </div>
 
                 <div className="nav-right">
@@ -88,24 +90,18 @@ const Navbar = () => {
                         />
                         <button className="search-btn" type="submit">Search</button>
                     </form>
-
-                    <NavLink to="/cart" className="nav-link cart-link">
-                        Cart
-                        {cartCount > 0 && <span className="cart-badge">{cartCount}</span>}
-                    </NavLink>
-
+                    <NavLink to="/about" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>About</NavLink>
                     {!loading && isAuthenticated && user && (
                         <>
-                            <NavLink to="/orders" className="nav-link">Orders</NavLink>
-                            <span className="nav-user">{userDisplayName.split(" ")[0]}</span>
+                            <NavLink to="/orders" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>Orders</NavLink>
+                            <NavLink to="/profile" className={({ isActive }) => isActive ? "nav-link profile-link active" : "nav-link profile-link"}>Profile</NavLink>
                             <button className="logout-btn" onClick={handleLogout}>Logout</button>
                         </>
                     )}
 
                     {!loading && !isAuthenticated && (
                         <>
-                            <NavLink to="/signin" className="nav-link">Sign In</NavLink>
-                            <NavLink to="/signup" className="nav-link signup-link">Sign Up</NavLink>
+                            <NavLink to="/signin" className={({ isActive }) => isActive ? "nav-link auth-link active" : "nav-link auth-link"}>Account</NavLink>
                         </>
                     )}
 
@@ -119,24 +115,24 @@ const Navbar = () => {
                 </div>
 
                 <div className={`mobile-menu ${open ? "open" : ""}`}>
-                    <NavLink to="/home" className="nav-link" onClick={() => setOpen(false)}>Home</NavLink>
-                    <NavLink to="/gallery" className="nav-link" onClick={() => setOpen(false)}>Gallery</NavLink>
-                    <NavLink to="/about" className="nav-link" onClick={() => setOpen(false)}>About</NavLink>
-                    <NavLink to="/contact" className="nav-link" onClick={() => setOpen(false)}>Contact</NavLink>
+                    <NavLink to="/home" end className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>Home</NavLink>
+                    <NavLink to="/gallery" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>Gallery</NavLink>
+                    <NavLink to="/about" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>About</NavLink>
+                    <NavLink to="/contact" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>Contact</NavLink>
 
-                    <NavLink to="/cart" className="nav-link" onClick={() => setOpen(false)}>Cart</NavLink>
+                    <NavLink to="/cart" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>Cart</NavLink>
 
                     {!loading && isAuthenticated && user && (
                         <>
-                            <NavLink to="/orders" className="nav-link" onClick={() => setOpen(false)}>Orders</NavLink>
+                            <NavLink to="/orders" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"} onClick={() => setOpen(false)}>Orders</NavLink>
+                            <NavLink to="/profile" className={({ isActive }) => isActive ? "nav-link profile-link active" : "nav-link profile-link"} onClick={() => setOpen(false)}>Profile</NavLink>
                             <button className="logout-btn mobile-logout" onClick={handleLogout}>Logout</button>
                         </>
                     )}
 
                     {!loading && !isAuthenticated && (
                         <>
-                            <NavLink to="/signin" className="nav-link" onClick={() => setOpen(false)}>Sign In</NavLink>
-                            <NavLink to="/signup" className="nav-link signup-link" onClick={() => setOpen(false)}>Sign Up</NavLink>
+                            <NavLink to="/signin" className={({ isActive }) => isActive ? "nav-link auth-link active" : "nav-link auth-link"} onClick={() => setOpen(false)}>Account</NavLink>
                         </>
                     )}
                 </div>
